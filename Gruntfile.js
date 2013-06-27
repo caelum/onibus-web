@@ -24,18 +24,23 @@ module.exports = function (grunt) {
       livereload: {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.{css}',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         tasks: ['livereload']
+      },
+      stylus: {
+        files: [
+          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.styl'
+        ],
+        tasks: ['stylus', 'livereload']
       }
     },
     connect: {
       options: {
         port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost'
+        hostname: '0.0.0.0'
       },
       livereload: {
         options: {
@@ -89,9 +94,9 @@ module.exports = function (grunt) {
     stylus: {
       main: {
         expand: true,
-        cwd: 'src/web/',
+        cwd: 'app/',
         src: ['**/*.styl'],
-        dest: 'war/',
+        dest: 'app/',
         ext: '.css'
       }
     },
@@ -206,7 +211,7 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,txt}',
             '.htaccess',
-            'components/**/*',
+            //'components/**/*',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*'
           ]
@@ -221,20 +226,23 @@ module.exports = function (grunt) {
     'clean:server',
     'livereload-start',
     'connect:livereload',
+    'stylus',
     'open',
     'watch'
   ]);
 
   grunt.registerTask('test', [
     'clean:server',
+    'stylus',
     'connect:test',
     'karma'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
-    'jshint',
-    'test',
+    'stylus',
+    //'jshint',
+    //'test',
     'useminPrepare',
     'imagemin',
     'cssmin',

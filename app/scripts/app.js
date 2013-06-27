@@ -1,13 +1,14 @@
-'use strict';
+angular.module('onibus',['google-maps','repositories']).config(function ($routeProvider, $locationProvider) {
 
-angular.module('onibusWebApp', [])
-  .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+      .when('/linhas-:linhas', {
+        controller: 'LinhaOnibusController',
+        templateUrl: 'null-template.html'
       })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+      // .otherwise({
+      //   redirectTo: '/test'
+      // });
+
+    // TODO enable on production
+    // $locationProvider.html5Mode(true);
+});

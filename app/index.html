@@ -6,25 +6,63 @@
     
     <title>BusaoSP - Ache os ônibus em São Paulo</title>
     <meta name="description" content="Encontre todos os pontos de ônibus de São Paulo ao seu redor e nos pontos os respectivos ônibus que por ele passam, além disso, busque o itinerário de cada linha e visualize no mapa.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewportxxx" content="width=device-width, initial-scale=1, user-scalable=no">
     
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/mapa.css">
+      <link rel="stylesheet" href="styles/lista.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="onibusWebApp">
-    <!-- Add your site or application content here -->
-    <div class="container" ng-view></div>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=pt-br&region=BR"></script>
 
-    <script src="components/angular/angular.js"></script>
-    <script src="components/angular-resource/angular-resource.js"></script>
-    <script src="components/angular-cookies/angular-cookies.js"></script>
-    <script src="components/angular-sanitize/angular-sanitize.js"></script>
+    <!-- build:js scripts/deps.js -->
+      <script src="components/angular/angular.js"></script>
+      <script src="components/angular-resource/angular-resource.js"></script>
+      <script src="components/angular-cookies/angular-cookies.js"></script>
+      <script src="components/angular-sanitize/angular-sanitize.js"></script>
+      <script src="scripts/lib/geolocationmarker.js"></script>
+    <!-- endbuild -->
 
     <!-- build:js scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+      <script src="scripts/services/repositories.js"></script>
+      <script src="scripts/services/google-maps.js"></script>
+      <script src="scripts/app.js"></script>
+      <script src="scripts/controllers/ponto.js"></script>
+      <script src="scripts/controllers/linha.js"></script>
+      <script src="scripts/controllers/mapa.js"></script>
     <!-- endbuild -->
+    
+  </head>
+  <body ng-app="onibus">
+    
+    
+    <!-- Lista de pontos -->
+    <div ng-controller="PontoController" class="pontos">
+      <h1>Pontos próximos</h1>
+    
+      <ul class="pontos-lista">
+        <li ng-repeat="ponto in pontos" class="pontos-ponto">
+          <div ng-click="toggle(ponto)">{{ ponto.descricao }}</div>
+          
+          <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
+            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="show(linha)">
+              {{ linha.letreiro }} - {{ linha.sentido.terminalPartida }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Google Maps -->
+    <div ng-controller="MapaController" class="mapa">
+      <div id="map-module"></div>
+    </div>
+
+    <!-- Controllers -->
+    <div ng-view></div>
+    <script type="text/ng-template" id="null-template.html"><!-- NULL --></script>
+
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
