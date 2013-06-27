@@ -15,7 +15,7 @@
 		this.map = new google.maps.Map(mapEl, mapOptions);
 
 		// add geolocation marker
-		var geomarker = new GeolocationMarker(this.map);
+		var geomarker = new GeolocationMarker(this.map, {'title': 'Sua localização',});
 		geomarker.addListener('position_changed', function() {
 			var pos = geomarker.getPosition();
 			$rootScope.$broadcast('positionchanged', {latitude: pos.jb, longitude: pos.kb});
@@ -24,6 +24,7 @@
 		// prepare markers
 		this.markersCache = [];
 		this.itineraryCache = [];
+		this.stopCache = [];
 
 		// colored itineraries
 		this.colors = ['#00A0B0','#CC333F','#EB6841','#EDC951','#6A4A3C','#E94E77','#CBE86B','#00A8C6','#FF9900'];
@@ -48,10 +49,15 @@
 				strokeWeight: 1
 		};
 
-		this._addStop(latitude, longitude, label, icon);
+		label = '<p><strong>Ponto próximo de você</strong></p><p>' + label + '</p>';
+
+		var marker = this._addStop({latitude: latitude, longitude: longitude}, label, icon);
+		this.stopCache.push(marker);
 	}
 
-	GoogleMap.prototype.addItineraryStop = function (id, latitude, longitude, label) {
+	GoogleMap.prototype.adicionaParadaItinerario = function (opcoes) {
+		var id = opcoes.linha.id;
+
 		this.itineraryCache[id] = this.itineraryCache[id] || {markers:[]};
 
 		if (!this.itineraryCache[id].color) {
@@ -67,20 +73,22 @@
 				strokeWeight: 1
 		};
 
-		var marker = this._addStop(latitude, longitude, label, icon);
+		var label = '<p><strong>Ponto do itinerário do '+opcoes.linha.codigo+'</strong></p><p>' + opcoes.ponto.endereco + '</p><p>' + opcoes.linha.codigo + ': '+opcoes.linha.nome+'</p>';
+
+		var marker = this._addStop(opcoes.ponto.posicao, label, icon);
 		this.itineraryCache[id]['markers'].push(marker);
 	}
 
-	GoogleMap.prototype._addStop = function(latitude, longitude, label, icon) {
+	GoogleMap.prototype._addStop = function(posicao, label, icon) {
 		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(latitude, longitude),
+			position: new google.maps.LatLng(posicao.latitude, posicao.longitude),
 			title: label,
 			map: this.map,
 			icon: icon
 		});
 
 		var infowindow = new google.maps.InfoWindow({
-		    content: '<p><strong>Ponto de ônibus</strong></p><p>' + label + '</p>'
+		    content: label
 		});
 
 		google.maps.event.addListener(marker, 'click', function() {
@@ -93,7 +101,7 @@
 	}
 
 
-	GoogleMap.prototype.cleanMarkers = function() {
+	GoogleMap.prototype.cleanAllMarkers = function() {
 		var markers = this.markersCache;
 		if (markers) {
 			for (i in markers) {
@@ -101,6 +109,25 @@
 			}
 		}
 		this.markersCache = [];
+	}
+
+	GoogleMap.prototype.cleanBusStopMarkers = function() {
+		var markers = this.stopCache;
+		if (markers) {
+			for (i in markers) {
+			  markers[i].setMap(null);
+			}
+		}
+		this.stopCache = [];
+	}
+
+	GoogleMap.prototype.changeBusStopMarkers = function(value) {
+		var markers = this.stopCache;
+		if (markers) {
+			for (i in markers) {
+			  markers[i].setVisible(value || !markers[i].getVisible());
+			}
+		}
 	}
 
 	GoogleMap.prototype.removeItinerary = function(id) {
@@ -111,7 +138,28 @@
 			}
 		}
 		this.colors.push(this.itineraryCache[id].color); // restore color to the pool
-		this.itineraryCache[id] = undefined;
+		delete this.itineraryCache[id];
+	}
+
+	GoogleMap.prototype.removeObsoleteItineraries = function(ids) {
+		var i, id, used_id, exists;
+
+		for (id in this.itineraryCache) {
+			exists = false;
+			i = 0;
+			while (used_id = ids[i++]) {
+				if (id == used_id) exists = true;
+			}
+			if (!exists) this.removeItinerary(id);
+		}
+	}
+
+	GoogleMap.prototype.hasItinerary = function(id) {
+		return this.itineraryCache.hasOwnProperty(id);
+	}
+
+	GoogleMap.prototype.hasBusStops = function() {
+		return this.stopCache.length != 0;
 	}
 
     module.service('map', GoogleMap);

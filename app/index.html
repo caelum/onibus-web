@@ -39,14 +39,14 @@
     
     <!-- Lista de pontos -->
     <div ng-controller="PontoController" class="pontos">
-      <h1>Pontos próximos</h1>
+      <h1 ng-click="exibicaoPontosProximos()">Pontos próximos</h1>
     
       <ul class="pontos-lista">
         <li ng-repeat="ponto in pontos" class="pontos-ponto">
           <div ng-click="toggle(ponto)">{{ ponto.descricao }}</div>
           
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
-            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="show(linha)">
+            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id)">
               {{ linha.letreiro }} - {{ linha.sentido.terminalPartida }}
             </li>
           </ul>
