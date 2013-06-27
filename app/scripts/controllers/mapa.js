@@ -1,12 +1,15 @@
 function MapaController($scope, map) {
 
-	map.center(-23.550394, -46.633947); // marco zero
+	// na abertura, centraliza no marco zero de SP
+	map.center(-23.550394, -46.633947);
 	map.zoom(13);
 
-	$scope.$on('positionchanged', function(event, position){
+	// quando chegar a posicao do GPS, centraliza o mapa nele
+	this._centralizaPosicaoUsuario = function(event, position){
 		map.center(position.latitude, position.longitude);
-		map.zoom(17);
-	});
+		map.zoom(16);
+	};
+	$scope.$on('positionchanged', this._centralizaPosicaoUsuario);
 
 }
-//MapaController.$inject = ['$scope', 'PontoRepository', 'map'];
+MapaController.$inject = ['$scope', 'map'];

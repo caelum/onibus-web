@@ -1,10 +1,7 @@
 (function(){
-	var module = angular.module('google-maps',[]);
-	google.maps.visualRefresh = true;
+	google.maps.visualRefresh = true; // global
 
 	function GoogleMap($rootScope) {
-		console.log('new GoogleMap')
-
 		var mapEl = document.getElementById('map-module');
 
 		var mapOptions = {
@@ -27,7 +24,7 @@
 		this.stopCache = [];
 
 		// colored itineraries
-		this.colors = ['#00A0B0','#CC333F','#EB6841','#EDC951','#6A4A3C','#E94E77','#CBE86B','#00A8C6','#FF9900'];
+		this.colors = ['#00A0B0','#CC333F','#EDC951','#6A4A3C','#E94E77','#CBE86B','#EB6841','#00A8C6','#FF9900'];
 		this.usedColor = 0;
 	}
 
@@ -41,10 +38,10 @@
 	
 	GoogleMap.prototype.addBusStop = function (latitude, longitude, label) {
 		var icon = {
-				path: google.maps.SymbolPath.CIRCLE,
-				fillColor: "red",
+				path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
+				fillColor: "blue",
 				fillOpacity: 0.8,
-				scale: 7,
+				scale: 4,
 				strokeColor: "white",
 				strokeWeight: 1
 		};
@@ -109,6 +106,8 @@
 			}
 		}
 		this.markersCache = [];
+		this.itineraryCache = [];
+		this.stopCache = [];
 	}
 
 	GoogleMap.prototype.cleanBusStopMarkers = function() {
@@ -119,15 +118,6 @@
 			}
 		}
 		this.stopCache = [];
-	}
-
-	GoogleMap.prototype.changeBusStopMarkers = function(value) {
-		var markers = this.stopCache;
-		if (markers) {
-			for (i in markers) {
-			  markers[i].setVisible(value || !markers[i].getVisible());
-			}
-		}
 	}
 
 	GoogleMap.prototype.removeItinerary = function(id) {
@@ -162,6 +152,6 @@
 		return this.stopCache.length != 0;
 	}
 
-    module.service('map', GoogleMap);
+    APP.service('map', ['$rootScope', GoogleMap]);
 
 })();

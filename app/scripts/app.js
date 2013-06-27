@@ -1,14 +1,19 @@
-angular.module('onibus',['google-maps','repositories']).config(function ($routeProvider, $locationProvider) {
+var APP = angular.module('onibus',[])
+
+APP.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
     $routeProvider
       .when('/linhas-:linhas', {
         controller: 'LinhaOnibusController',
         templateUrl: 'null-template.html'
       })
-      // .otherwise({
-      //   redirectTo: '/test'
-      // });
+      .when('/', {
+        controller: 'PontosProximosController',
+        templateUrl: 'null-template.html'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
 
-    // TODO enable on production
-    // $locationProvider.html5Mode(true);
-});
+    $locationProvider.html5Mode(true);
+}]);

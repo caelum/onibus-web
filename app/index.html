@@ -25,10 +25,14 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+
       <script src="scripts/services/repositories.js"></script>
+      <script src="scripts/services/pontos-proximos.js"></script>
       <script src="scripts/services/google-maps.js"></script>
-      <script src="scripts/app.js"></script>
-      <script src="scripts/controllers/ponto.js"></script>
+      
+      <script src="scripts/controllers/lista.js"></script>
+      <script src="scripts/controllers/pontos-proximos.js"></script>
       <script src="scripts/controllers/linha.js"></script>
       <script src="scripts/controllers/mapa.js"></script>
     <!-- endbuild -->
@@ -38,11 +42,11 @@
     
     
     <!-- Lista de pontos -->
-    <div ng-controller="PontoController" class="pontos">
+    <div ng-controller="ListaController" class="pontos">
       <h1 ng-click="exibicaoPontosProximos()">Pontos próximos</h1>
     
       <ul class="pontos-lista">
-        <li ng-repeat="ponto in pontos" class="pontos-ponto">
+        <li ng-repeat="ponto in pontosProximos.pontos" class="pontos-ponto">
           <div ng-click="toggle(ponto)">{{ ponto.descricao }}</div>
           
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
