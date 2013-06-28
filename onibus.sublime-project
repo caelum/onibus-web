@@ -1,0 +1,18 @@
+{
+  "folders":
+  [
+    {
+      "path": ".",
+      "folder_exclude_patterns": [
+        "node_modules",
+        "dist",
+        "app/styles/*.css",
+        "app/components"
+      ],
+      "file_exclude_patterns": [
+        "app/styles/*.css"
+      ]
+
+    }
+  ]
+}

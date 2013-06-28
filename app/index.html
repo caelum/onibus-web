@@ -1,54 +1,52 @@
 <!doctype html>
-<html class="no-js">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
+
     <title>BusaoSP - Ache os ônibus em São Paulo</title>
     <meta name="description" content="Encontre todos os pontos de ônibus de São Paulo ao seu redor e nos pontos os respectivos ônibus que por ele passam, além disso, busque o itinerário de cada linha e visualize no mapa.">
+
     <meta name="viewportxxx" content="width=device-width, initial-scale=1, user-scalable=no">
-    
+
     <!-- build:css styles/main.css -->
       <link rel="stylesheet" href="styles/main.css">
       <link rel="stylesheet" href="styles/mapa.css">
       <link rel="stylesheet" href="styles/lista.css">
     <!-- endbuild -->
-    
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=pt-br&region=BR"></script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;language=pt-br&amp;region=BR"></script>
 
     <!-- build:js scripts/deps.js -->
       <script src="components/angular/angular.js"></script>
-      <script src="components/angular-resource/angular-resource.js"></script>
-      <script src="components/angular-cookies/angular-cookies.js"></script>
-      <script src="components/angular-sanitize/angular-sanitize.js"></script>
       <script src="scripts/lib/geolocationmarker.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
+      <script src="scripts/app.js"></script>
 
       <script src="scripts/services/repositories.js"></script>
       <script src="scripts/services/pontos-proximos.js"></script>
       <script src="scripts/services/google-maps.js"></script>
-      
+
       <script src="scripts/controllers/lista.js"></script>
       <script src="scripts/controllers/pontos-proximos.js"></script>
       <script src="scripts/controllers/linha.js"></script>
       <script src="scripts/controllers/mapa.js"></script>
     <!-- endbuild -->
-    
+
   </head>
   <body ng-app="onibus">
-    
-    
+
+
     <!-- Lista de pontos -->
     <div ng-controller="ListaController" class="pontos">
       <h1 ng-click="exibicaoPontosProximos()">Pontos próximos</h1>
-    
+
       <ul class="pontos-lista">
         <li ng-repeat="ponto in pontosProximos.pontos" class="pontos-ponto">
           <div ng-click="toggle(ponto)">{{ ponto.descricao }}</div>
-          
+
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
             <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id)">
               {{ linha.letreiro }} - {{ linha.sentido.terminalPartida }}
@@ -57,7 +55,7 @@
         </li>
       </ul>
     </div>
-    
+
     <!-- Google Maps -->
     <div ng-controller="MapaController" class="mapa">
       <div id="map-module"></div>
@@ -68,7 +66,7 @@
     <script type="text/ng-template" id="null-template.html"><!-- NULL --></script>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!-- Google Analytics -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -78,5 +76,15 @@
       ga('create', 'UA-270161-19', 'busaosp.com.br');
       ga('send', 'pageview');
     </script>
+
+    <!-- LiveReload -->
+    <script>
+    if (location.hostname.indexOf('busaosp.com.br') === -1) {
+      var s = document.createElement('script');
+      s.src = 'http://'+location.hostname+':35729/livereload.js?snipver=1';
+      document.body.appendChild(s);
+    }
+    </script>
+
   </body>
 </html>

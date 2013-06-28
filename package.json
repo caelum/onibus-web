@@ -16,7 +16,6 @@
     "grunt-contrib-imagemin": "latest",
     "grunt-contrib-livereload": "latest",
     "grunt-contrib-stylus": "latest",
-    "grunt-bower-requirejs": "latest",
     "grunt-usemin": "latest",
     "grunt-regarde": "latest",
     "grunt-rev": "latest",

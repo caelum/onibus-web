@@ -1,23 +1,25 @@
 /*
   Controlador que dispara na home e exibe os pontos próximos no mapa.
  */
-function PontosProximosController($scope, map, pontosProximos) {
+'use strict';
+function PontosProximosController($scope, mapa, pontosProximos) {
 
-	$scope.pontosProximos = pontosProximos;
+  $scope.pontosProximos = pontosProximos;
 
-	// quando chegar nova lista de pontos, atualiza o mapa com novos markers
-	this._mudouPontosProximos = function(){
-		if (pontosProximos.pontos) {
-			map.cleanAllMarkers();
+  // quando chegar nova lista de pontos, atualiza o mapa com novos markers
+  this._mudouPontosProximos = function(){
+    if (pontosProximos.pontos) {
+      mapa.limpaMapa();
 
-			for (var i = 0; i < pontosProximos.pontos.length; i++) {
-				var ponto = pontosProximos.pontos[i];
-				map.addBusStop(ponto.coordenada.latitude, ponto.coordenada.longitude, ponto.descricao);
-			}
-		}
-	};
-	$scope.$watch('pontosProximos.pontos', this._mudouPontosProximos);
+      for (var i = 0; i < pontosProximos.pontos.length; i++) {
+        var ponto = pontosProximos.pontos[i];
+        mapa.adicionaPontoProximo(ponto.coordenada.latitude, ponto.coordenada.longitude, ponto.descricao);
+      }
+    }
+  };
+
+  $scope.$watch('pontosProximos.pontos', this._mudouPontosProximos);
 
 }
 
-PontosProximosController.$inject = ['$scope', 'map', 'pontosProximos'];
+PontosProximosController.$inject = ['$scope', 'mapa', 'pontosProximos'];

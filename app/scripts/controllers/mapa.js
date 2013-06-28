@@ -1,15 +1,21 @@
-function MapaController($scope, map) {
+/*
+  Controla o funcionamento do Mapa
+ */
+'use strict';
 
-	// na abertura, centraliza no marco zero de SP
-	map.center(-23.550394, -46.633947);
-	map.zoom(13);
+function MapaController($scope, mapa) {
 
-	// quando chegar a posicao do GPS, centraliza o mapa nele
-	this._centralizaPosicaoUsuario = function(event, position){
-		map.center(position.latitude, position.longitude);
-		map.zoom(16);
-	};
-	$scope.$on('positionchanged', this._centralizaPosicaoUsuario);
+  // na abertura, centraliza no marco zero de SP
+  mapa.centraliza(-23.550394, -46.633947);
+  mapa.zoom(13);
+
+  // quando chegar a posicao do GPS, centraliza o mapa nele
+  this._centralizaPosicaoUsuario = function(event, position){
+    mapa.centraliza(position.latitude, position.longitude);
+    mapa.zoom(16);
+  };
+  $scope.$on('positionchanged', this._centralizaPosicaoUsuario);
 
 }
-MapaController.$inject = ['$scope', 'map'];
+
+MapaController.$inject = ['$scope', 'mapa'];
