@@ -3,7 +3,7 @@
 trap "killall php node" EXIT
 
 cd app
-php -S 127.0.0.1:8888 &> /dev/null &
+php -S 0.0.0.0:8888  &
 
 cd ..
 grunt run

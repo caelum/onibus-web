@@ -12,9 +12,9 @@ function MapaController($scope, mapa) {
   // quando chegar a posicao do GPS, centraliza o mapa nele
   this._centralizaPosicaoUsuario = function(event, position){
     mapa.centraliza(position.latitude, position.longitude);
-    mapa.zoom(16);
+    mapa.zoom(15);
   };
-  $scope.$on('positionchanged', this._centralizaPosicaoUsuario);
+  $scope.$on('novaposicao', this._centralizaPosicaoUsuario);
 
 }
 

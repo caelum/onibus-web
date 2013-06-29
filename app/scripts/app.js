@@ -2,6 +2,7 @@
 
 var APP = angular.module('onibus',[]);
 
+// configura aspectos do Angular
 APP.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
   // rotas e controles da aplicacao

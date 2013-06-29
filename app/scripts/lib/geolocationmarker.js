@@ -44,7 +44,7 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
         'anchor': new google.maps.Point(8, 8)
     },
     // This marker may move frequently - don't force canvas tile redraw
-    'optimized': false, 
+    'optimized': false,
     'position': new google.maps.LatLng(0, 0),
     'title': 'Current location',
     'zIndex': 2
@@ -89,9 +89,9 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
    * @type {google.maps.Map?}
    */
   this.map = null;
-  
+
   this.set('minimum_accuracy', null);
-  
+
   this.set('position_options', /** GeolocationPositionOptions */
       ({enableHighAccuracy: true, maximumAge: 1000}));
 
@@ -210,7 +210,7 @@ GeolocationMarker.prototype.setCircleOptions = function(circleOpts) {
 };
 
 /**
- * @private 
+ * @private
  * @param {GeolocationPosition} position
  */
 GeolocationMarker.prototype.updatePosition_ = function(position) {

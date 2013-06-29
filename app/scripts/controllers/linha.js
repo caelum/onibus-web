@@ -2,8 +2,8 @@
   Controlador que dispara em /linhas-* e exibe os pontos das linhas selecionadas no mapa.
  */
 'use strict';
-function LinhaOnibusController($scope, $routeParams, ExternalData, mapa, pontosProximos) {
 
+function LinhaOnibusController($scope, $routeParams, remote, mapa, pontosProximos, temporeal) {
   $scope.pontosProximos = pontosProximos;
 
   // remove os pontos
@@ -19,14 +19,21 @@ function LinhaOnibusController($scope, $routeParams, ExternalData, mapa, pontosP
 
       // remove do mapa os itinerarios que foram removidos
       mapa.removeItinerariosObsoletos(linhas);
+      mapa.removeTodosTempoReal();
 
       // desenha o itinerario de cada linha
-      for (var i = 0; i < linhas.length; i++) {
-        $scope._processaLinha(linhas[i]);
-      }
+      linhas.forEach(function(linhaId){
+        $scope._processaLinha(linhaId);
 
+        temporeal.verificaLinha(linhaId);
+      });
+
+      // agenda o monitoramento em tempo real
+      temporeal.setLinhasAtivas(linhas);
     }
   };
+  // agenda o desenho de itinerario pra toda vez que a lista de linhas mudar
+  $scope.$watch('pontosProximos.linhas', this._desenhaItinerarios);
 
   // HELPERS
   // pega os dados dessa linha
@@ -36,7 +43,7 @@ function LinhaOnibusController($scope, $routeParams, ExternalData, mapa, pontosP
       var linha = pontosProximos.linhas[linhaId];
 
       // pega os dados e processa o itinerario
-      ExternalData.itinerarioLinha(linhaId, function(itinerario){
+      remote.itinerarioLinha(linhaId, function(itinerario){
         $scope._processaItinerario(linha, itinerario);
       });
     }
@@ -44,9 +51,7 @@ function LinhaOnibusController($scope, $routeParams, ExternalData, mapa, pontosP
 
   // adiciona os pontos de um itinerario ao mapa
   $scope._processaItinerario = function(linha, itinerario){
-    for (var i = 0; i < itinerario.length; i++) {
-      var ponto = itinerario[i];
-
+    itinerario.forEach(function(ponto){
       mapa.adicionaParadaItinerario({
         linha: {
           id: linha.id,
@@ -58,12 +63,9 @@ function LinhaOnibusController($scope, $routeParams, ExternalData, mapa, pontosP
           endereco: ponto.descricao
         }
       });
-    }
+    });
   };
-
-  // agenda o desenho de itinerario pra toda vez que a lista de linhas mudar
-  $scope.$watch('pontosProximos.linhas', this._desenhaItinerarios);
 
 }
 
-LinhaOnibusController.$inject = ['$scope', '$routeParams', 'ExternalData', 'mapa', 'pontosProximos'];
+LinhaOnibusController.$inject = ['$scope', '$routeParams', 'remote', 'mapa', 'pontosProximos', 'temporeal'];

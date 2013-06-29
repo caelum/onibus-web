@@ -25,9 +25,11 @@
     <!-- build:js scripts/scripts.js -->
       <script src="scripts/app.js"></script>
 
-      <script src="scripts/services/repositories.js"></script>
+      <script src="scripts/services/remote.js"></script>
       <script src="scripts/services/pontos-proximos.js"></script>
       <script src="scripts/services/google-maps.js"></script>
+      <script src="scripts/services/geolocation.js"></script>
+      <script src="scripts/services/tempo-real.js"></script>
 
       <script src="scripts/controllers/lista.js"></script>
       <script src="scripts/controllers/pontos-proximos.js"></script>
@@ -45,7 +47,7 @@
 
       <ul class="pontos-lista">
         <li ng-repeat="ponto in pontosProximos.pontos" class="pontos-ponto">
-          <div ng-click="toggle(ponto)">{{ ponto.descricao }}</div>
+          <div ng-click="toggle(ponto)">{{ ponto.descricao }} - {{ ponto.distancia * 1000 }}m</div>
 
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
             <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id)">

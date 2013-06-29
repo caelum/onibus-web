@@ -17,15 +17,9 @@
 
     // adiciona o marcador de geolocalizacao do usuario
     var geomarker = new window.GeolocationMarker(this.map, {'title': 'Sua localização',});
-    geomarker.addListener('position_changed', function() {
-      var pos = geomarker.getPosition();
-      $rootScope.$broadcast('positionchanged', {latitude: pos.jb, longitude: pos.kb});
-    });
 
     // prepara caches de marcadores
-    this.cacheMarcadores = [];
-    this.cacheItinerarios = [];
-    this.cacheParadasProximas = [];
+    this.limpaMapa();
 
     // palheta de cores para itinerarios
     this.cores = ['#00A0B0','#CC333F','#EDC951','#6A4A3C','#E94E77','#CBE86B','#EB6841','#00A8C6','#FF9900'];
@@ -54,6 +48,26 @@
 
     var marker = this._adicionaPonto({latitude: latitude, longitude: longitude}, label, icon);
     this.cacheParadasProximas.push(marker);
+  };
+
+  GoogleMap.prototype.adicionaOnibusTempoReal = function (opcoes) {
+    var id = opcoes.linha.id;
+
+    this.cacheTempoReal[id] = this.cacheTempoReal[id] || [];
+
+    var icon = {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      fillColor: 'black',
+      fillOpacity: 0.8,
+      scale: 9,
+      strokeColor: 'white',
+      strokeWeight: 1
+    };
+
+    var label = '<p><strong>Ônibus Tempo Real</strong></p><p>' + opcoes.linha.codigo + ': '+opcoes.linha.nome+'</p>';
+
+    var marker = this._adicionaPonto(opcoes.localizacao, label, icon);
+    this.cacheTempoReal[id].push(marker);
   };
 
   GoogleMap.prototype.adicionaParadaItinerario = function (opcoes) {
@@ -112,6 +126,7 @@
     this.cacheMarcadores = [];
     this.cacheItinerarios = [];
     this.cacheParadasProximas = [];
+    this.cacheTempoReal = [];
   };
 
   GoogleMap.prototype.removeParadasProximas = function() {
@@ -133,6 +148,22 @@
     }
     this.cores.push(this.cacheItinerarios[id].color); // restore color to the pool
     delete this.cacheItinerarios[id];
+  };
+
+  GoogleMap.prototype.removeTempoReal = function(id) {
+    var i, markers = this.cacheTempoReal[id];
+    if (markers) {
+      for (i in markers) {
+        markers[i].setMap(null);
+      }
+    }
+    delete this.cacheTempoReal[id];
+  };
+
+  GoogleMap.prototype.removeTodosTempoReal = function() {
+    for (var id in this.cacheTempoReal) {
+      this.removeTempoReal(id);
+    }
   };
 
   GoogleMap.prototype.removeItinerariosObsoletos = function(ids) {
