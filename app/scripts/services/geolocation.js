@@ -1,3 +1,11 @@
+/*
+ * Esse serviço observa a geolocalização do usuário e broadcasta pra todo mundo quando a posição mudar.
+ *
+ * Eventos disparados:
+ *    'novaposicao' (position) - ignora variações mínimas na medição
+ *    'novaposicaoexata' (position) - dispara frequentemente, contendo posição exata e suas variações.
+ *
+ */
 'use strict';
 
 window.APP.service('geolocation', ['$rootScope', function($rootScope) {

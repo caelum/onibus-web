@@ -1,3 +1,8 @@
+/*
+ *
+ * Esse serviço expõe os dados remotos do webservice externo JSON para a aplicação.
+ *
+ */
 'use strict';
 
 window.APP.factory('remote', ['$http', function($http){

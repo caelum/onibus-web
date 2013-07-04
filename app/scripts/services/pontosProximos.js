@@ -1,3 +1,11 @@
+/*
+ * Esse serviço atualiza os pontos próximos do usuário conforme a posição dele muda.
+ *
+ * API:
+ *   'pontosProximos.pontos': lista de pontos proximos
+ *   'pontosProximos.linhas': lista de linhas associadas aos pontos proximos, indexado por ID da linha
+ */
+
 'use strict';
 
 window.APP.service('pontosProximos', ['$rootScope', 'remote', 'geolocation', function($rootScope, remote){

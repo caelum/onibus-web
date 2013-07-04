@@ -1,5 +1,6 @@
 <?php
 	header("Content-type: application/javascript; charset=UTF-8");
+  header("Cache-Control: public; max-age=60");
 
 	$url = $_GET[url];
 	$callback = $_GET[callback];
