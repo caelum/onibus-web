@@ -20,6 +20,7 @@
     <!-- build:js scripts/deps.js -->
       <script src="components/angular/angular.js"></script>
       <script src="scripts/lib/geolocationmarker.js"></script>
+      <script src="scripts/lib/Spinner.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/scripts.js -->
@@ -48,7 +49,7 @@
 
 
     <!-- Lista de pontos -->
-    <div ng-controller="ListaController" class="pontos">
+    <div ng-controller="ListaController" class="pontos {{ pontosProximos.pontos && 'carregado' || 'carregando' }}">
       <h1 ng-click="exibicaoPontosProximos()">Pontos próximos</h1>
 
       <ul class="pontos-lista">
@@ -62,6 +63,8 @@
           </ul>
         </li>
       </ul>
+
+      <div class="pontos-loading"></div>
     </div>
 
     <!-- Google Maps -->

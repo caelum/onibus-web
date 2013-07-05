@@ -23,7 +23,7 @@
     this.map = new google.maps.Map(mapEl, mapOptions);
 
     // adiciona o marcador de geolocalizacao do usuario
-    var geomarker = new window.GeolocationMarker(this.map, {'title': 'Sua localização',});
+    new window.GeolocationMarker(this.map, {'title': 'Sua localização',});
   }
 
   GoogleMap.prototype.centraliza = function(latitude, longitude) {
@@ -47,7 +47,7 @@
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(posicao.latitude, posicao.longitude),
       map: map
-    });;
+    });
 
     var infowindow = new google.maps.InfoWindow();
 
@@ -62,7 +62,9 @@
   }
 
   Marcador.prototype.remove = function() {
-    if (this.marker) this.marker.setMap(null);
+    if (this.marker) {
+      this.marker.setMap(null);
+    }
     // google.maps.event.removeListener(this.marker, 'click'); // TODO nao precisa?
     this.marker = this.infowindow = this.icone.marker = null;
   };

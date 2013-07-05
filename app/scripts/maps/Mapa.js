@@ -21,7 +21,7 @@
     var marcador = this.map.adicionaMarcador({latitude: latitude, longitude: longitude});
     marcador.setTituloJanela('Ponto próximo de você');
     marcador.adicionaInfoJanela(label);
-    marcador.setIcone(IconePontoMultiCor, ['blue']);
+    marcador.setIcone(window.IconePontoMultiCor, ['blue']);
 
     this.cacheParadasProximas.push(marcador);
   };
@@ -33,7 +33,7 @@
     var marcador = this.map.adicionaMarcador(opcoes.localizacao);
     marcador.setTituloJanela('Ônibus Tempo Real');
     marcador.adicionaInfoJanela(opcoes.linha.codigo + ': '+opcoes.linha.nome);
-    marcador.setIcone(IconeOnibus);
+    marcador.setIcone(window.IconeOnibus);
 
     this.cacheTempoReal[id].push(marcador);
   };
@@ -48,29 +48,27 @@
     }
 
     var cor = this.cacheItinerarios[id].color;
+    var marcador;
 
     if (this.pontosEmExibicao.hasOwnProperty(dados.ponto.numero)) {
       // reaproveita ponto
-      var marcador = this.pontosEmExibicao[dados.ponto.numero];
-
+      marcador = this.pontosEmExibicao[dados.ponto.numero];
       marcador.icone.adicionaCor(cor);
-      marcador.adicionaInfoJanela(dados.linha.codigo + ': '+dados.linha.nome);
-
-      this.cacheItinerarios[id].markers.push(marcador);
 
     } else {
       // cria novo ponto
-      var marcador = this.map.adicionaMarcador(dados.ponto.posicao);
+      marcador = this.map.adicionaMarcador(dados.ponto.posicao);
       marcador.setTituloJanela('Ponto ' + dados.ponto.endereco);
-      marcador.adicionaInfoJanela(dados.linha.codigo + ': '+dados.linha.nome);
-      marcador.setIcone(IconePontoMultiCor, [cor]);
+
+      marcador.setIcone(window.IconePontoMultiCor, [cor]);
       marcador.numeroPonto = dados.ponto.numero;
 
-      this.cacheItinerarios[id].markers.push(marcador);
       this.cacheItinerarios[id].label = dados.linha.codigo + ': '+dados.linha.nome;
-
       this.pontosEmExibicao[dados.ponto.numero] = marcador;
     }
+
+    marcador.adicionaInfoJanela(dados.linha.codigo + ': '+dados.linha.nome);
+    this.cacheItinerarios[id].markers.push(marcador);
   };
 
   Mapa.prototype.reiniciaCaches = function() {
@@ -81,16 +79,18 @@
   };
 
   Mapa.prototype.limpaMapa = function() {
+    var id;
+
     this.removeParadasProximas();
     this.pontosEmExibicao = {};
 
     // remove todos itinerarios
-    for (var id in this.cacheItinerarios) {
+    for (id in this.cacheItinerarios) {
       this.removeItinerario(id);
     }
 
     // remove todos tempo real
-    for (var id in this.cacheTempoReal) {
+    for (id in this.cacheTempoReal) {
       this.removeTempoReal(id);
     }
   };

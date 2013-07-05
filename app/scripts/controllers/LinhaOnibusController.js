@@ -3,14 +3,20 @@
  */
 'use strict';
 
-function LinhaOnibusController($scope, $routeParams, linhasAtivas, mapa, atualizaLinhas, pontosProximos, temporeal) {
+function LinhaOnibusController($scope, $routeParams, $location, linhasAtivas, mapa, atualizaLinhas, pontosProximos) {
   // remove os pontos
   mapa.removeParadasProximas();
 
   // anuncia novas linhas para exibir
   function anunciaLinhasParaExibir() {
-    var linhas = $routeParams.linhas.split(',');
-    linhasAtivas.setLinhas(linhas);
+    var linhasParam = $routeParams.linhas.split(',');
+    var linhasExibidas = linhasAtivas.setLinhas(linhasParam);
+    var novoPath = '/linhas-' + linhasExibidas.join(',');
+
+    // atualiza url caso precise
+    if ($routeParams.linhas !== novoPath) {
+      $location.path(novoPath);
+    }
   }
 
   // só exibe linhas depois que souber os pontos+linhas próximos.
@@ -23,4 +29,4 @@ function LinhaOnibusController($scope, $routeParams, linhasAtivas, mapa, atualiz
   });
 }
 
-LinhaOnibusController.$inject = ['$scope', '$routeParams', 'linhasAtivas', 'mapa', 'atualizaLinhas', 'pontosProximos', 'temporeal'];
+LinhaOnibusController.$inject = ['$scope', '$routeParams', '$location','linhasAtivas', 'mapa', 'atualizaLinhas', 'pontosProximos', 'temporeal'];

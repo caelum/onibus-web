@@ -32,13 +32,38 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
     }
   }
 
+  var numErrors = 0;
+  var watchId;
+
   function error(e) {
-    console.error('Error obtaining geolocation position');
+    console.error('Error obtaining geolocation position.');
     console.error(e);
+
+    numErrors++;
+
+    if (numErrors === 5) {
+      // cancela o watch e tenta um getPosition grandão pra finalizar
+      navigator.geolocation.clearWatch(watchId);
+      navigator.geolocation.getCurrentPosition(newposition, error, {timeout: 20000, maximumAge: Infinity, enableHighAccuracy: false});
+    } else if (numErrors > 5) {
+      window.alert('Seu dispositivo não está retornando as coordenadas do GPS. O BusaoSP não vai funcionar.');
+    }
   }
 
-  navigator.geolocation.getCurrentPosition(newposition, error, {timeout: 1000});
-  navigator.geolocation.watchPosition(newposition, error, {enableHighAccuracy: true, maximumAge: 1000});
+  function setWatch(fn){
+    return function() {
+      try {
+        fn.apply(this, arguments);
+      } catch (e) {
+        console.error(e);
+      }
+
+      watchId = navigator.geolocation.watchPosition(newposition, error, {enableHighAccuracy: true, maximumAge: 1000, timeout: 5000});
+    };
+  }
+
+  navigator.geolocation.getCurrentPosition(setWatch(newposition), setWatch(error), {timeout: 1000, maximumAge: Infinity});
+
 
   // HELPERS
   // calcula a diferenca entre duas cooordenadas.

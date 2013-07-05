@@ -23,7 +23,7 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
     }
 
     $rootScope.$broadcast('mostralinha', linha);
-  };
+  }
 
   // remove uma linha e avisa todo mundo
   function removeLinha(linha) {
@@ -31,12 +31,14 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
 
     linhas.splice(linhas.indexOf(linha), 1);
     $rootScope.$broadcast('removelinha', linha);
-  };
+  }
 
   //helper: diff entre arrays
   function adiff(a, b) {
-      return a.filter(function(i) {return !(b.indexOf(i) > -1);});
-  };
+    return a.filter(function(i) {
+      return (b.indexOf(i) <= -1);
+    });
+  }
 
   // recebe novas linhas e avisa possiveis remocoes/adicioes
   function setLinhas(novasLinhas) {
@@ -45,7 +47,9 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
 
     antigas.forEach(removeLinha);
     novas.forEach(adicionaLinha);
-  };
+
+    return linhas.slice(0);
+  }
 
   // API
   this.adicionaLinha = adicionaLinha;

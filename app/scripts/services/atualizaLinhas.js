@@ -4,7 +4,7 @@
 
 'use strict';
 
-window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosProximos', 'temporeal', function($rootScope, remote, mapa, pontosProximos, temporeal) {
+window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosProximos', 'temporeal', function($rootScope, remote, mapa, pontosProximos) {
 
   function desenhaNovaLinha(evt, linhaId) {
     var linha = pontosProximos.linhas[linhaId];
@@ -17,8 +17,8 @@ window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosPro
     }
   }
 
- // adiciona os pontos de um itinerario ao mapa
- function processaItinerario(linha, itinerario){
+  // adiciona os pontos de um itinerario ao mapa
+  function processaItinerario(linha, itinerario){
     itinerario.forEach(function(ponto){
       mapa.adicionaParadaItinerario({
         linha: {
@@ -33,7 +33,7 @@ window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosPro
         }
       });
     });
-  };
+  }
 
   function tiraLinhaDoMapa(evt, linhaId) {
     mapa.removeItinerario(linhaId);

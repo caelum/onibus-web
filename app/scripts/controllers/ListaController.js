@@ -6,6 +6,15 @@
 function ListaController($scope, $routeParams, $location, pontosProximos) {
   $scope.pontosProximos = pontosProximos;
 
+  // monta o spinner de carregamento
+  var spinner = new window.Spinner().spin();
+  document.querySelector('.pontos-loading').appendChild(spinner.el);
+  $scope.$watch('pontosProximos.pontos', function(){
+    if (pontosProximos.pontos) {
+      spinner.stop();
+    }
+  });
+
   $scope.toggle = function(ponto) {
     ponto.show = !ponto.show;
   };
