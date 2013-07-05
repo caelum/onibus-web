@@ -1,0 +1,4 @@
+* sudo npm -g install grunt-cli bower
+* npm install
+* bower install
+* grunt run

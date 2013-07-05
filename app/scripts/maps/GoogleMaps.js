@@ -90,6 +90,10 @@
     this.marker.setPosition(new google.maps.LatLng(posicao.latitude, posicao.longitude));
   };
 
+  Marcador.prototype.setZIndex = function(value) {
+    this.marker.setZIndex(value);
+  };
+
   function regeraJanela(infowindow, titulo, infos) {
     var title = '<p><strong>' + titulo + '</strong></p>';
     var info = '<p>' + infos.join('</p><p>') + '</p>';

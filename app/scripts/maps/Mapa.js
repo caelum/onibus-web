@@ -21,7 +21,7 @@
     var marcador = this.map.adicionaMarcador({latitude: latitude, longitude: longitude});
     marcador.setTituloJanela('Ponto próximo de você');
     marcador.adicionaInfoJanela(label);
-    marcador.setIcone(window.IconePontoMultiCor, ['blue']);
+    marcador.setIcone(window.IconePontoMultiCor, ['#ff9300']);
 
     this.cacheParadasProximas.push(marcador);
   };
@@ -30,10 +30,18 @@
     var id = opcoes.linha.id;
     this.cacheTempoReal[id] = this.cacheTempoReal[id] || [];
 
+    this.cacheItinerarios[id] = this.cacheItinerarios[id] || {markers:[]};
+
+    if (!this.cacheItinerarios[id].color) {
+      this.cacheItinerarios[id].color = this.cores[this.corUsada++];
+    }
+    var cor = this.cacheItinerarios[id].color;
+
     var marcador = this.map.adicionaMarcador(opcoes.localizacao);
+    marcador.setZIndex(50000);
     marcador.setTituloJanela('Ônibus Tempo Real');
     marcador.adicionaInfoJanela(opcoes.linha.codigo + ': '+opcoes.linha.nome);
-    marcador.setIcone(window.IconeOnibus);
+    marcador.setIcone(window.IconeOnibus, cor);
 
     this.cacheTempoReal[id].push(marcador);
   };
