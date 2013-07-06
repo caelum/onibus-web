@@ -4,17 +4,12 @@
 
 'use strict';
 
-window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosProximos', 'temporeal', function($rootScope, remote, mapa, pontosProximos) {
+window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinhas', 'temporeal', function($rootScope, remote, mapa, dadosLinhas) {
 
-  function desenhaNovaLinha(evt, linhaId) {
-    var linha = pontosProximos.linhas[linhaId];
-
-    // pega os dados e processa o itinerario
-    if (linha) {
-      remote.itinerarioLinha(linhaId, function(itinerario){
-        processaItinerario(linha, itinerario);
-      });
-    }
+  function desenhaNovaLinha(linha) {
+    remote.itinerarioLinha(linha.id, function(itinerario){
+      processaItinerario(linha, itinerario);
+    });
   }
 
   // adiciona os pontos de um itinerario ao mapa
@@ -41,6 +36,8 @@ window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'pontosPro
 
 
   // agenda eventos
-  $rootScope.$on('mostralinha', desenhaNovaLinha);
+  $rootScope.$on('mostralinha', function(evt, linhaId) {
+    dadosLinhas.buscaLinha(linhaId, desenhaNovaLinha);
+  });
   $rootScope.$on('removelinha', tiraLinhaDoMapa);
 }]);

@@ -9,7 +9,7 @@ window.APP.factory('remote', ['$http', function($http){
 
   // internal implementation
   function _remote (url, onsuccess, retries) {
-    var retries = retries || 0;
+    retries = retries || 0;
 
     $http.jsonp(url).success(onsuccess)
       .error(function(data, status){

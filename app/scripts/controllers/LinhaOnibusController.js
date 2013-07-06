@@ -22,8 +22,8 @@ function LinhaOnibusController($scope, $routeParams, $location, linhasAtivas, ma
   // só exibe linhas depois que souber os pontos+linhas próximos.
   // então fica esperando chegar os dados da 1a vez, se for preciso.
   $scope.pontosProximos = pontosProximos;
-  $scope.$watch('pontosProximos.linhas', function(){
-    if (pontosProximos.linhas) {
+  $scope.$watch('pontosProximos.pontos', function(){
+    if (pontosProximos.pontos) {
       anunciaLinhasParaExibir();
     }
   });

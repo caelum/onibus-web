@@ -1,6 +1,6 @@
 'use strict';
 
-window.APP.service('temporeal', ['$rootScope', 'pontosProximos', 'linhasAtivas', 'mapa', 'remote', function($rootScope, pontosProximos, linhasAtivas, mapa, remote) {
+window.APP.service('temporeal', ['$rootScope', 'dadosLinhas', 'linhasAtivas', 'mapa', 'remote', function($rootScope, dadosLinhas, linhasAtivas, mapa, remote) {
 
   // execução do monitoramento periodico
   function monitoraTempoReal() {
@@ -15,9 +15,7 @@ window.APP.service('temporeal', ['$rootScope', 'pontosProximos', 'linhasAtivas',
 
   // executa verificacao de uma linha
   function verificaTempoRealDaLinha(linhaId) {
-    var linha = pontosProximos.linhas[linhaId];
-
-    if (linha) {
+    dadosLinhas.buscaLinha(linhaId, function(linha){
       remote.onibusTempoReal(linha.codigoGPS, function(resultados) {
         mapa.removeTempoReal(linhaId);
 
@@ -32,7 +30,7 @@ window.APP.service('temporeal', ['$rootScope', 'pontosProximos', 'linhasAtivas',
           });
         });
       });
-    }
+    });
   }
 
   // reaje aos eventos de nova linha e remove linha
