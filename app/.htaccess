@@ -1,3 +1,6 @@
+Header unset ETag
+FileETag None
+
 AddOutputFilterByType DEFLATE text/text text/plain text/xml text/css application/x-javascript application/javascript text/cache-manifest image/svg+xml application/x-font-ttf
 
 AddType image/svg+xml .svg .svgz
@@ -10,3 +13,18 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^.*$ ./index.html [L]
 
+ExpiresActive on
+ExpiresDefault      "access plus 2 minutes"
+
+ExpiresByType text/cache-manifest "access plus 0 seconds"
+ExpiresByType text/xml "access plus 0 seconds"
+ExpiresByType application/xml "access plus 0 seconds"
+ExpiresByType application/json "access plus 0 seconds"
+ExpiresByType application/rss+xml "access plus 1 hour"
+ExpiresByType image/x-icon "access plus 1 week"
+
+ExpiresByType text/css "access plus 1 year"
+ExpiresByType application/javascript "access plus 1 year"
+ExpiresByType image/svg+xml "access plus 1 year"
+
+Header append Cache-Control "public"

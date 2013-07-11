@@ -1,5 +1,5 @@
 <?php
-	header("Content-type: application/javascript; charset=UTF-8");
+	header("Content-type: application/json; charset=UTF-8");
   header("Cache-Control: public; max-age=60");
 
 	$url = $_GET[url];
