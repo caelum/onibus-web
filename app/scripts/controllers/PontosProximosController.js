@@ -2,14 +2,14 @@
   Controlador que dispara na home e exibe os pontos próximos no mapa.
  */
 'use strict';
-function PontosProximosController($scope, mapa, pontosProximos) {
+function PontosProximosController($scope, mapa, pontosProximos, linhasAtivas) {
 
   $scope.pontosProximos = pontosProximos;
 
   // quando chegar nova lista de pontos, atualiza o mapa com novos markers
   this._mudouPontosProximos = function(){
     if (pontosProximos.pontos) {
-      mapa.limpaMapa();
+      linhasAtivas.setLinhas([]);
 
       for (var i = 0; i < pontosProximos.pontos.length; i++) {
         var ponto = pontosProximos.pontos[i];
@@ -22,4 +22,4 @@ function PontosProximosController($scope, mapa, pontosProximos) {
 
 }
 
-PontosProximosController.$inject = ['$scope', 'mapa', 'pontosProximos'];
+PontosProximosController.$inject = ['$scope', 'mapa', 'pontosProximos', 'linhasAtivas'];
