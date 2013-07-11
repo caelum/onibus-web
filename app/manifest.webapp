@@ -8,6 +8,8 @@
     "256": "/images/firefox/icone-256x256.png"
   },
 
+  "appcache_path": "/manifest.appcache",
+
   "permissions": {
     "geolocation": {
       "description": "Para mostrar as linhas de ônibus próximas a você"

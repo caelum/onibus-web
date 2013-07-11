@@ -40,6 +40,7 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '<%= yeoman.dist %>/*',
+            '<%= yeoman.app %>/manifest.appcache',
             '!<%= yeoman.dist %>/.git*'
           ]
         }]
@@ -119,6 +120,23 @@ module.exports = function (grunt) {
       }
     },
 
+    manifest: {
+      generate: {
+        options: {
+          basePath: '<%= yeoman.dist %>',
+          //cache: ['js/app.js', 'css/style.css'],
+          fallback: ['/ /index.html'],
+          preferOnline: true
+        },
+        src: [
+          'index.html',
+          '{images,scripts,styles}/**/*.*',
+          'favicon.ico'
+        ],
+        dest: '<%= yeoman.dist %>/manifest.appcache'
+      }
+    },
+
     rev: {
       dist: {
         files: {
@@ -176,7 +194,8 @@ module.exports = function (grunt) {
     'copy',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'manifest'
   ]);
 
   grunt.registerTask('default', ['build']);

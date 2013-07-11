@@ -23,7 +23,8 @@
     "grunt-open": "latest",
     "matchdep": "latest",
     "grunt-google-cdn": "latest",
-    "grunt-ngmin": "latest"
+    "grunt-ngmin": "latest",
+    "grunt-manifest": "latest"
   },
   "engines": {
     "node": ">=0.8.0"

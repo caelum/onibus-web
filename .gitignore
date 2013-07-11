@@ -4,4 +4,5 @@ dist
 .sass-cache
 app/components
 *.css
+*.appcache
 onibus.sublime-workspace
