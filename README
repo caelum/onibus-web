@@ -1,4 +1,10 @@
+# Pra rodar localmente
+
 * sudo npm -g install grunt-cli bower
 * npm install
 * bower install
 * grunt run
+
+# Dependencias de browsers modernos
+
+- CSS calc (Chrome, Firefox, Safari/iOS 6, IE9, Opera/WebKit, BB10)

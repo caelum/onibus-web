@@ -1,17 +1,25 @@
 @import "nib"
 
 .pontos
-  absolute top 0 left 0
-  z-index 1
+  absolute top 3em left 0
+  padding 1em
+  z-index 2
 
-  height 100%
-  overflow scroll // TODO usar iScroll
+  overflow-y scroll // TODO usar iScroll?
+  -webkit-overflow-scrolling: touch;
 
-  width 20em
+  width 18em
 
   background white
-  padding: 1em
   box-shadow 0 0 5px rgba(0,0,0,0.3)
+
+@css {
+  .pontos {
+    height: -webkit-calc(100% - 3em);
+    height: -moz-calc(100% - 3em);
+    height: calc(100% - 3em);
+  }
+}
 
 
 .pontos-lista-linhas

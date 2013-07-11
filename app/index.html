@@ -7,12 +7,17 @@
     <title>BusaoSP - Ache os ônibus em São Paulo</title>
     <meta name="description" content="Encontre todos os pontos de ônibus de São Paulo ao seu redor e nos pontos os respectivos ônibus que por ele passam, além disso, busque o itinerário de cada linha e visualize no mapa.">
 
-    <meta name="viewportxxx" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
 
     <!-- build:css styles/main.css -->
       <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/topo.css">
       <link rel="stylesheet" href="styles/mapa.css">
       <link rel="stylesheet" href="styles/lista.css">
+      <link rel="stylesheet" href="styles/offcanvas.css">
     <!-- endbuild -->
 
     <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;language=pt-br&amp;region=BR"></script>
@@ -39,6 +44,7 @@
       <script src="scripts/services/geolocation.js"></script>
       <script src="scripts/services/temporeal.js"></script>
 
+      <script src="scripts/controllers/NavegacaoController.js"></script>
       <script src="scripts/controllers/ListaController.js"></script>
       <script src="scripts/controllers/PontosProximosController.js"></script>
       <script src="scripts/controllers/LinhaOnibusController.js"></script>
@@ -46,19 +52,24 @@
     <!-- endbuild -->
 
   </head>
-  <body ng-app="onibus">
+  <body ng-app="onibus" ng-controller="NavegacaoController" class="{{ classeNavegacao }}">
 
+    <!-- Topo -->
+    <div class="topo" ng-click="exibeMenu()">
+      <img src="images/busaosp.svg" class="topo-logo">
+      <h1 class="topo-nome">BusaoSP</h1>
+    </div>
 
     <!-- Lista de pontos -->
     <div ng-controller="ListaController" class="pontos {{ pontosProximos.pontos && 'carregado' || 'carregando' }}">
-      <h1 ng-click="exibicaoPontosProximos()">Pontos próximos</h1>
+      <h2 ng-click="exibicaoPontosProximos(); exibeMapa()">Pontos próximos</h2>
 
       <ul class="pontos-lista">
         <li ng-repeat="ponto in pontosProximos.pontos" class="pontos-ponto">
           <div ng-click="toggle(ponto)">{{ ponto.descricao }} - {{ ponto.distancia * 1000 }}m</div>
 
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
-            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id)">
+            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id); exibeMapa()">
               {{ linha.letreiro }} - {{ linha.sentido.terminalPartida }}
             </li>
           </ul>
@@ -69,7 +80,7 @@
     </div>
 
     <!-- Google Maps -->
-    <div ng-controller="MapaController" class="mapa">
+    <div ng-controller="MapaController" class="mapa" ng-click="exibeMapa()">
       <div id="map-module"></div>
     </div>
 

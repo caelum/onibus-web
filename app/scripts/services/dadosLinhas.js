@@ -39,13 +39,15 @@ window.APP.service('dadosLinhas', ['$rootScope', 'remote', function($rootScope, 
       // por limitacoes da API server-side, preciso de duas chamadas Ajax
       remote.itinerarioLinha(linhaId, function(itinerario){
         var posicaoPrimeiroPonto = itinerario[0].coordenada;
+
         remote.pontosProximos(posicaoPrimeiroPonto, function(pontos){
           descobreLinhas(pontos);
-            if (temLinha(linhaId)) {
-              callback(linhas[linhaId]);
-            } else {
-              throw "Não consegui achar dados da linha " + linhaId;
-            }
+
+          if (temLinha(linhaId)) {
+            callback(linhas[linhaId]);
+          } else {
+            throw 'Não consegui achar dados da linha ' + linhaId;
+          }
         });
       });
     }

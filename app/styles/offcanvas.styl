@@ -1,0 +1,49 @@
+@import "nib"
+
+@media (max-width: 600px)
+
+  // configura as transições pro menu e mapa
+  // (iOS bug: usar 'all' crasheia o safari)
+  .pontos, .mapa
+    transition 0.5s transform ease, 0.7s -webkit-filter ease-out
+
+
+  // mapa carrega em full screen por baixo do menu
+  .mapa
+    padding-left 0
+
+  // estado #1
+  // menu em destaque
+  .nav-menu
+
+    .pontos
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+
+    // viadagem: mapa em background com efeitinho
+    .mapa
+      -webkit-filter: grayscale(80%) blur(1px);
+
+    // coloca um protetor por cima do mapa,
+    // pra impossibilitar disparar eventos
+    .mapa:before
+      content ''
+      display block
+
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
+
+      z-index 1
+
+
+  // estado #2
+  // mapa em destaque
+  .nav-mapa
+
+    .pontos
+      transform: translate3d(-100%, 0, 0);
+      backface-visibility: hidden;
+
