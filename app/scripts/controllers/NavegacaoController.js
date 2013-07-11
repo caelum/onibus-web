@@ -4,9 +4,6 @@
 'use strict';
 
 function NavegacaoController($scope) {
-
-  var menuVisivel = true;
-
   $scope.classeNavegacao = 'nav-menu';
 
   $scope.exibeMenu = function() {
