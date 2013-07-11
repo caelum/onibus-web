@@ -5,12 +5,28 @@
     <title>BusaoSP - Ache os ônibus em São Paulo</title>
     <meta name="description" content="Encontre todos os pontos de ônibus de São Paulo ao seu redor e nos pontos os respectivos ônibus que por ele passam, além disso, busque o itinerário de cada linha e visualize no mapa.">
 
+    <!-- mobile meta data -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta http-equiv="x-rim-auto-match" content="none">
 
     <!-- Apple meta data -->
-    <meta name=apple-mobile-web-app-capable content=yes>
-    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="BusaoSP">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/ios/icone-57x57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ios/icone-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ios/icone-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ios/icone-144x144.png">
+    <link href="images/ios/startup-640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+    <link href="images/ios/startup-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+    <script>
+    if (navigator.userAgent.match(/iP(ad|hone|od)/i) && window.screen.height==568) { // iPhone 4''
+      document.querySelector("meta[name=viewport]").content="width=320.1";
+    }
+    </script>
 
     <!-- build:css styles/main.css -->
       <link rel="stylesheet" href="styles/main.css">
