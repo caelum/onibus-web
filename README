@@ -8,3 +8,6 @@
 # Dependencias de browsers modernos
 
 - CSS calc (Chrome, Firefox, Safari/iOS 6, IE9, Opera/WebKit, BB10)
+- position fixed
+- overflow:scroll
+- setImmediate / requestAnimationFrame

@@ -5,12 +5,15 @@
   // configura as transições pro menu e mapa
   // (iOS bug: usar 'all' crasheia o safari)
   .pontos, .mapa
-    transition 0.5s transform ease
+    transition 700ms transform ease
 
 
   // mapa carrega em full screen por baixo do menu
   .mapa
     padding-left 0
+
+  .pontos
+    backface-visibility: hidden;
 
   // estado #1
   // menu em destaque
@@ -18,7 +21,6 @@
 
     .pontos
       transform: translate3d(0, 0, 0);
-      backface-visibility: hidden;
 
     // coloca um protetor por cima do mapa,
     // pra impossibilitar disparar eventos
