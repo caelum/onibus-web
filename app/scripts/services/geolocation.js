@@ -42,10 +42,14 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
     numErrors++;
 
     if (numErrors === 5) {
-      // cancela o watch e tenta um getPosition grandão pra finalizar
       navigator.geolocation.clearWatch(watchId);
-      navigator.geolocation.getCurrentPosition(newposition, error, {timeout: 20000, maximumAge: Infinity, enableHighAccuracy: false});
-    } else if (numErrors > 5) {
+
+      if (posicao.latitude === 0) {
+        navigator.geolocation.getCurrentPosition(newposition, error, {timeout: 20000, maximumAge: Infinity, enableHighAccuracy: false});
+      }
+    }
+
+    if (numErrors > 5) {
       window.alert('Seu dispositivo não está retornando as coordenadas do GPS. O BusaoSP não vai funcionar.');
     }
   }
