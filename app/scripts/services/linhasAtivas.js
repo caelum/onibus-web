@@ -22,7 +22,9 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
       removeLinha(linhas[0]); // remove mais antigo (FIFO)
     }
 
-    $rootScope.$broadcast('mostralinha', linha);
+    setImmediate(function() {
+      $rootScope.$broadcast('mostralinha', linha);
+    });
   }
 
   // remove uma linha e avisa todo mundo
@@ -30,7 +32,10 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
     console.debug('Removendo linha ' + linha);
 
     linhas.splice(linhas.indexOf(linha), 1);
-    $rootScope.$broadcast('removelinha', linha);
+
+    setImmediate(function() {
+      $rootScope.$broadcast('removelinha', linha);
+    });
   }
 
   //helper: diff entre arrays

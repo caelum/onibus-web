@@ -149,6 +149,22 @@
     this.map.zoom(zoomLevel);
   };
 
+  // ultra setImmediate em todos os métodos
+  function agendaImmediate(originalMethod) {
+    return function() {
+      var that = this;
+      var options = arguments;
+
+      setImmediate(function() {
+        originalMethod.apply(that, options);
+      });
+    };
+  }
+
+  for (var method in Mapa.prototype) {
+    Mapa.prototype[method] = agendaImmediate(Mapa.prototype[method]);
+  }
+
   window.APP.service('mapa', ['googleMap', Mapa]);
 
 })();
