@@ -6,6 +6,9 @@ AddOutputFilterByType DEFLATE text/text text/plain text/xml text/css application
 AddType image/svg+xml .svg .svgz
 AddEncoding gzip svgz
 
+AddType application/x-web-app-manifest+json .webapp
+AddType text/cache-manifest .manifest
+
 RewriteEngine on
 Options +FollowSymLinks
 RewriteCond %{REQUEST_FILENAME} !-f
