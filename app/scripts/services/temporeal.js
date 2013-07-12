@@ -4,7 +4,7 @@ window.APP.service('temporeal', ['$rootScope', 'dadosLinhas', 'linhasAtivas', 'm
 
   // execução do monitoramento periodico
   function monitoraTempoReal() {
-    console.debug('Monitorando tempo real de ' + linhasAtivas.linhas.length + ' linhas');
+    console.info('Monitorando tempo real de ' + linhasAtivas.linhas.length + ' linhas');
     linhasAtivas.linhas.forEach(function(linhaId) {
       verificaTempoRealDaLinha(linhaId);
     });

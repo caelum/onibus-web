@@ -19,7 +19,7 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
 
   // quando uma nova posição chegar, propaga pra aplicação toda
   function newposition(position) {
-    console.debug('New geolocation position ' + position.coords.latitude + ', ' + position.coords.longitude);
+    console.info('New geolocation position ' + position.coords.latitude + ', ' + position.coords.longitude);
 
     posicaoExata = position.coords;
 

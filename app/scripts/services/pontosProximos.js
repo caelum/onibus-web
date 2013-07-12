@@ -10,7 +10,7 @@ window.APP.service('pontosProximos', ['$rootScope', 'remote', 'dadosLinhas', 'ge
 
   // quando mudar a posição do usuario, pega dados novos
   function novaPosicao(event, position) {
-    console.debug('Procurando pontos próximos a ' + position.latitude + ', ' + position.longitude);
+    console.info('Procurando pontos próximos a ' + position.latitude + ', ' + position.longitude);
 
     remote.pontosProximos(position, function(pontos){
       api.pontos = pontos;

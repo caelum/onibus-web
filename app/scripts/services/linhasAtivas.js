@@ -14,7 +14,7 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
 
   // adiciona uma linha e avisa todo mundo
   function adicionaLinha(linha) {
-    console.debug('Vou exibir linha ' + linha);
+    console.info('Vou exibir linha ' + linha);
 
     linhas.push(linha);
 
@@ -29,7 +29,7 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
 
   // remove uma linha e avisa todo mundo
   function removeLinha(linha) {
-    console.debug('Removendo linha ' + linha);
+    console.info('Removendo linha ' + linha);
 
     linhas.splice(linhas.indexOf(linha), 1);
 
