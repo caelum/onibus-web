@@ -3,7 +3,6 @@
  *
  * Eventos disparados:
  *    'novaposicao' (position) - ignora variações mínimas na medição
- *    'novaposicaoexata' (position) - dispara frequentemente, contendo posição exata e suas variações.
  *
  */
 'use strict';
@@ -19,16 +18,20 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
 
   // quando uma nova posição chegar, propaga pra aplicação toda
   function newposition(position) {
-    console.info('GEO: new position ' + position.coords.latitude + ', ' + position.coords.longitude);
+    //console.debug('GEO: new raw position ' + position.coords.latitude + ', ' + position.coords.longitude);
 
     posicaoExata = position.coords;
 
     if (variacaoSignificante(posicao, posicaoExata)) {
-      posicao = posicaoExata;
+      if (pertoDeSP(posicaoExata)) {
+        posicao = posicaoExata;
 
-      $rootScope.$broadcast('novaposicao', posicao);
-    } else {
-      $rootScope.$broadcast('novaposicaoexata', posicaoExata);
+        console.log('GEO: new position being used ' + posicao.latitude + ', ' + posicao.longitude);
+        $rootScope.$broadcast('novaposicao', posicao);
+      } else {
+        // gps doidão! default centro de SP fake
+        newposition({coords: {latitude: -23.550394, longitude: -46.633947}});
+      }
     }
   }
 
@@ -83,6 +86,12 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
     var deltaLat = Math.abs(pos1.latitude - pos2.latitude);
     var deltaLon = Math.abs(pos1.longitude - pos2.longitude);
     return deltaLat > E || deltaLon > E;
+  }
+
+  // calcula se a coordenada tem alguma chance de ser perto
+  // de SP ou se o gps tá doidão
+  function pertoDeSP(pos) {
+    return parseInt(pos.latitude) === -23 && parseInt(pos.longitude) === -46;
   }
 
 }]);
