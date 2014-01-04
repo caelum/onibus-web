@@ -4,6 +4,7 @@
 
   "dependencies": {
     "angular": "latest",
+    "angular-route": "latest",
     "fastclick": "latest"
   },
   "devDependencies": {

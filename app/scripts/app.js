@@ -1,6 +1,6 @@
 'use strict';
 
-var APP = angular.module('onibus',[]);
+var APP = angular.module('onibus',['ngRoute']);
 
 // configura aspectos do Angular
 APP.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
