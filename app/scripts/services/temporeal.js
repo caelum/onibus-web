@@ -24,7 +24,8 @@ window.APP.service('temporeal', ['$rootScope', 'dadosLinhas', 'linhasAtivas', 'm
             linha: {
               id: linha.id,
               codigo: linha.letreiro,
-              nome: linha.sentido.terminalPartida
+              nome: linha.sentido.terminalPartida,
+              cor: linha.cor
             },
             localizacao: onibus.localizacao
           });

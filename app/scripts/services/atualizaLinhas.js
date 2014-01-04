@@ -4,9 +4,16 @@
 
 'use strict';
 
-window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinhas', 'temporeal', function($rootScope, remote, mapa, dadosLinhas) {
+window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinhas', 'temporeal', function($rootScope, remote, mapa, dadosLinhas, temporeal) {
+
+  // palheta de cores para linhas
+  var CORES = ['#CC333F','#00A0B0','#EDC951','#6A4A3C','#E94E77','#CBE86B','#EB6841','#00A8C6','#FF9900'];
+  var corUsada = 0;
+
 
   function desenhaNovaLinha(linha) {
+    linha.cor = CORES[corUsada++];
+
     remote.itinerarioLinha(linha.id, function(itinerario){
       processaItinerario(linha, itinerario);
     });
@@ -19,7 +26,8 @@ window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinh
         linha: {
           id: linha.id,
           codigo: linha.letreiro,
-          nome: linha.sentido.terminalPartida
+          nome: linha.sentido.terminalPartida,
+          cor: linha.cor
         },
         ponto: {
           numero: ponto.numero,
@@ -32,6 +40,10 @@ window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinh
 
   function tiraLinhaDoMapa(evt, linhaId) {
     mapa.removeItinerario(linhaId);
+
+    dadosLinhas.buscaLinha(linhaId, function(linha) {
+      CORES.push(linha.cor); // restore color to the pool
+    });
   }
 
 

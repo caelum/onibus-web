@@ -10,10 +10,6 @@
 
     // prepara caches de marcadores
     this.reiniciaCaches();
-
-    // palheta de cores para itinerarios
-    this.cores = ['#CC333F','#00A0B0','#EDC951','#6A4A3C','#E94E77','#CBE86B','#EB6841','#00A8C6','#FF9900'];
-    this.corUsada = 0;
   }
 
   Mapa.prototype.adicionaPontoProximo = function (latitude, longitude, label) {
@@ -33,7 +29,7 @@
     this.cacheItinerarios[id] = this.cacheItinerarios[id] || {markers:[]};
 
     if (!this.cacheItinerarios[id].color) {
-      this.cacheItinerarios[id].color = this.cores[this.corUsada++];
+      this.cacheItinerarios[id].color = opcoes.linha.cor;
     }
     var cor = this.cacheItinerarios[id].color;
 
@@ -52,7 +48,7 @@
     this.cacheItinerarios[id] = this.cacheItinerarios[id] || {markers:[]};
 
     if (!this.cacheItinerarios[id].color) {
-      this.cacheItinerarios[id].color = this.cores[this.corUsada++];
+      this.cacheItinerarios[id].color = dados.linha.cor;
     }
 
     var cor = this.cacheItinerarios[id].color;
@@ -126,7 +122,6 @@
         }
       });
 
-      this.cores.push(cor); // restore color to the pool
       delete this.cacheItinerarios[id];
     }
   };

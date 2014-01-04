@@ -13,28 +13,28 @@ window.APP.service('linhasAtivas', ['$rootScope', function($rootScope) {
   var MAX_LINHAS = 4;
 
   // adiciona uma linha e avisa todo mundo
-  function adicionaLinha(linha) {
-    console.info('Vou exibir linha ' + linha);
+  function adicionaLinha(linhaId) {
+    console.info('Vou exibir linha ' + linhaId);
 
-    linhas.push(linha);
+    linhas.push(linhaId);
 
     if (linhas.length > MAX_LINHAS) {
       removeLinha(linhas[0]); // remove mais antigo (FIFO)
     }
 
     setImmediate(function() {
-      $rootScope.$broadcast('mostralinha', linha);
+      $rootScope.$broadcast('mostralinha', linhaId);
     });
   }
 
   // remove uma linha e avisa todo mundo
-  function removeLinha(linha) {
-    console.info('Removendo linha ' + linha);
+  function removeLinha(linhaId) {
+    console.info('Removendo linha ' + linhaId);
 
-    linhas.splice(linhas.indexOf(linha), 1);
+    linhas.splice(linhas.indexOf(linhaId), 1);
 
     setImmediate(function() {
-      $rootScope.$broadcast('removelinha', linha);
+      $rootScope.$broadcast('removelinha', linhaId);
     });
   }
 
