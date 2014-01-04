@@ -68,9 +68,12 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
     };
   }
 
-  console.info('GEO: getting first unprecise position');
-  navigator.geolocation.getCurrentPosition(setWatch(newposition), setWatch(error), {timeout: 1000, maximumAge: Infinity});
-
+  // firefox Desktop precisa que atrase um pouco a 1a posicao,
+  // provavelmente por concorrencia com a bolinha azul do mapa.
+  setTimeout(function(){
+    console.info('GEO: getting first unprecise position');
+    navigator.geolocation.getCurrentPosition(setWatch(newposition), setWatch(error), {timeout: 1000, maximumAge: Infinity});
+  },200);
 
   // HELPERS
   // calcula a diferenca entre duas cooordenadas.
