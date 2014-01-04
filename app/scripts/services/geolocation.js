@@ -19,7 +19,7 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
 
   // quando uma nova posição chegar, propaga pra aplicação toda
   function newposition(position) {
-    console.info('New geolocation position ' + position.coords.latitude + ', ' + position.coords.longitude);
+    console.info('GEO: new position ' + position.coords.latitude + ', ' + position.coords.longitude);
 
     posicaoExata = position.coords;
 
@@ -36,7 +36,7 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
   var watchId;
 
   function error(e) {
-    console.error('Error obtaining geolocation position.');
+    console.error('GEO: Error obtaining geolocation position.');
     console.error(e);
 
     numErrors++;
@@ -45,6 +45,7 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
       navigator.geolocation.clearWatch(watchId);
 
       if (posicao.latitude === 0) {
+        console.info('GEO: Trying to get position one last time with gigant timeout');
         navigator.geolocation.getCurrentPosition(newposition, error, {timeout: 20000, maximumAge: Infinity, enableHighAccuracy: false});
       }
     }
@@ -62,16 +63,18 @@ window.APP.service('geolocation', ['$rootScope', function($rootScope) {
         console.error(e);
       }
 
-      watchId = navigator.geolocation.watchPosition(newposition, error, {enableHighAccuracy: true, maximumAge: 1000, timeout: 5000});
+      console.info('GEO: monitoring accurate position');
+      watchId = navigator.geolocation.watchPosition(newposition, error, {enableHighAccuracy: true, maximumAge: 1000, timeout: 10000});
     };
   }
 
+  console.info('GEO: getting first unprecise position');
   navigator.geolocation.getCurrentPosition(setWatch(newposition), setWatch(error), {timeout: 1000, maximumAge: Infinity});
 
 
   // HELPERS
   // calcula a diferenca entre duas cooordenadas.
-  // se a diferenca por minima, ignora
+  // se a diferenca for minima, ignora
   function variacaoSignificante(pos1, pos2) {
     var E = 0.0004;
     var deltaLat = Math.abs(pos1.latitude - pos2.latitude);
