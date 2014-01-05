@@ -7,6 +7,7 @@
 
 # Dependencias de browsers modernos
 
+- ES5: Array#forEach, Node#classList
 - CSS calc (Chrome, Firefox, Safari/iOS 6, IE9, Opera/WebKit, BB10)
 - position fixed
 - overflow:scroll
