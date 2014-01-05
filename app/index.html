@@ -87,16 +87,30 @@
     </div>
 
     <!-- Lista de pontos -->
-    <div ng-controller="ListaController" class="pontos {{ pontosProximos.pontos && 'carregado' || 'carregando' }}">
-      <h2 ng-click="exibicaoPontosProximos(); exibeMapa()">Pontos próximos</h2>
+    <div ng-controller="ListaController"
+         class="pontos {{ pontosProximos.pontos && 'carregado' || 'carregando' }}">
+
+      <h2 ng-click="exibicaoPontosProximos(); exibeMapa()"
+          class="titulo-pontos-proximos">
+        Pontos próximos
+      </h2>
 
       <ul class="pontos-lista">
         <li ng-repeat="ponto in pontosProximos.pontos" class="pontos-ponto">
           <div ng-click="toggle(ponto)">{{ ponto.descricao }} - {{ ponto.distancia * 1000 }}m</div>
 
           <ul class="pontos-lista-linhas {{ ponto.show && 'show' || 'hide' }}">
-            <li ng-repeat="linha in ponto.onibuses" class="pontos-linha" ng-click="exibe(linha.id); exibeMapa()">
+            <li
+              ng-repeat="linha in ponto.onibuses"
+              class="pontos-linha {{ linha.ativa && 'ativa' || 'inativa' }}"
+              ng-click="exibe(linha.id); exibeMapa()">
+
+              <span class="linha-legenda"
+                    style="background-color: {{ linha.cor }}">
+              </span>
+
               {{ linha.letreiro }} - {{ linha.sentido.terminalPartida }}
+
             </li>
           </ul>
         </li>
