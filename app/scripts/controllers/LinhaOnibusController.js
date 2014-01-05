@@ -29,4 +29,4 @@ function LinhaOnibusController($scope, $routeParams, $location, linhasAtivas, ma
   });
 }
 
-LinhaOnibusController.$inject = ['$scope', '$routeParams', '$location','linhasAtivas', 'mapa', 'atualizaLinhas', 'pontosProximos', 'temporeal'];
+LinhaOnibusController.$inject = ['$scope', '$routeParams', '$location','linhasAtivas', 'mapa', 'atualizaLinhas', 'pontosProximos'/*, 'temporeal'*/];
