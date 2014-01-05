@@ -1,6 +1,6 @@
 {
   "name": "BusaoSP",
-  "description": "Ache os ônibus em São Paulo",
+  "description": "Bus locator for the city of São Paulo, Brazil",
   "launch_path": "/index.html",
 
   "icons": {
@@ -21,5 +21,11 @@
     "url": "http://www.caelum.com.br"
   },
 
-  "default_locale": "pt_BR"
+  "locales": {
+    "pt-BR": {
+      "description": "Ache os ônibus em São Paulo"
+    }
+  },
+
+  "default_locale": "pt-BR"
 }
