@@ -1,6 +1,7 @@
 'use strict';
 
 window.APP.service('temporeal', ['$rootScope', 'dadosLinhas', 'linhasAtivas', 'mapa', 'remote', function($rootScope, dadosLinhas, linhasAtivas, mapa, remote) {
+  console.log('Setting up real time module');
 
   // execução do monitoramento periodico
   function monitoraTempoReal() {

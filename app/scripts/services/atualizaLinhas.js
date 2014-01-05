@@ -4,7 +4,7 @@
 
 'use strict';
 
-window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinhas', 'temporeal', function($rootScope, remote, mapa, dadosLinhas) {
+window.APP.service('atualizaLinhas', ['$rootScope', 'remote', 'mapa', 'dadosLinhas', function($rootScope, remote, mapa, dadosLinhas) {
 
   var dadosLinhasAtivas = [];
 
