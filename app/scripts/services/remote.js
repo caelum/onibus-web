@@ -29,15 +29,15 @@ window.APP.factory('remote', ['$http', function($http){
   return {
 
     pontosProximos: function(position, onsuccess) {
-      _remote('http://beta.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/onibusesNosPontosProximos.json&lat='+position.latitude+'&long='+position.longitude+'&callback=JSON_CALLBACK', onsuccess);
+      _remote('http://app.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/onibusesNosPontosProximos.json&lat='+position.latitude+'&long='+position.longitude+'&callback=JSON_CALLBACK', onsuccess);
     },
 
     itinerarioLinha: function(idOnibus, onsuccess) {
-      _remote('http://beta.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/itinerarioDoOnibus.json&onibus='+idOnibus+'&callback=JSON_CALLBACK', onsuccess);
+      _remote('http://app.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/itinerarioDoOnibus.json&onibus='+idOnibus+'&callback=JSON_CALLBACK', onsuccess);
     },
 
     onibusTempoReal: function(codigoGPS, onsuccess) {
-      _remote('http://beta.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/localizacoesDoOnibus.json&codigoLinha='+codigoGPS+'&callback=JSON_CALLBACK', onsuccess);
+      _remote('http://app.busaosp.com.br/jsonp.php?url=http://ondeestaoalbi2.herokuapp.com/localizacoesDoOnibus.json&codigoLinha='+codigoGPS+'&callback=JSON_CALLBACK', onsuccess);
     }
 
   };
